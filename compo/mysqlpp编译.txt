@@ -1,0 +1,70 @@
+mysqlpp编译
+{
+
+	//编译前需要mysql的数据库
+	yum install mysql-devel
+	
+	wget http://www.tangentsoft.net/mysql++/releases/mysql++-3.2.2.tar.gz
+	//	-C 指定解压位置
+	tar -zxvf mysql++-3.2.2.tar.gz -C /usr/						
+	
+	
+	//我们并没有指定--prefix=/some/path，
+	//所以库会默认安装到/usr/local目录下。
+	//既然libmysqlpp.so是在/usr/local/lib下，
+	//编译器当然就无法找到它的定义了。
+	./configure --enable-thread-check 
+	make
+	make install
+	
+	
+	//将/etc/ld.so.conf文件列举的路径下的库文件缓存到/etc/ld.so.cache以供开发使用：
+	vi /etc/ld.so.cache
+	ldconfig
+]
+
+
+
+#include <mysql++.h>
+#include <iostream>
+
+using namespace std;
+int main()
+{
+     const char* db = 0, *server = 0, *user = 0, *password = "";
+     db = "svp_base_config";
+     server = "127.0.0.1";
+     user = "root";
+     password = "123456";
+     
+     mysqlpp::Connection conn(false);
+     if (conn.connect(db, server, user, password)) {
+         cout << "connect db succeed. " << endl;
+         mysqlpp::Query query = conn.query("SELECT * FROM Student");
+         if (mysqlpp::StoreQueryResult res = query.store()) {
+             cout.setf(ios::left);
+             cout << setw(31) << "db_id" <<
+                 setw(10) << "dbport" <<endl;
+ 
+             mysqlpp::StoreQueryResult::const_iterator it;
+             for (it = res.begin(); it != res.end(); ++it) {
+                 mysqlpp::Row row = *it;
+                 cout << setw(30) << row[0] << ' ' <<
+                         setw(9) << row[1] << ' ' <<
+                         endl;
+             }
+         }
+     } else {
+         cout << "connect db fail. " << endl;
+     }
+     return 0;
+}
+
+mkefile
+{
+
+	main : hello.cpp
+	        @g++ -o main hello.cpp -lmysqlpp -I/usr/include/mysql -I/usr/local/include/mysql++
+	clean:
+	        @rm main
+}

@@ -1,0 +1,4 @@
+许可证被注销
+{
+	Win7    C:\Users\[Your User Name]\AppData\Roaming\Scooter Software\Beyond Compare 3\
+}

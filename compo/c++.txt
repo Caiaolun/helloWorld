@@ -1,0 +1,41 @@
+fopen 相对路径
+{
+	FILE *flog;
+	
+	//WINDOWS相对地址
+	flog = fopen("data\\log\\plc1.log", "a");
+	//LINUX相对地址
+	flog = fopen("./data/log/plc1.log", "a");
+}
+
+VS导入tlb库
+{
+	//no_namespace 取消命名空间,设置为全局
+	//rename	取消命名空间可能与编译器带的函数声明冲突,可以用这个函数改库的声明      ("旧名","新名字")         
+	#import "C:\Program Files (x86)\CS6\Lppx2.tlb" no_namespace rename("EOF","A_EOF")
+	// #import导入tlb后悔产生*.tlh	*.tli的文件,类似*.c	*.h;
+	//找不到导入的库的声明,可以加#include 
+	#include "Debug\lppx2.tlh"
+}
+
+闭屏 自动ATL::命名空间
+{
+	#define _ATL_NO_AUTOMATIC_NAMESPACE
+]
+
+取4个字节的高低位
+{
+	比如：wParam = 0x12345678，则LOWORD(wParam) = 0x5678, HIWORD(wParam) = 0x1234
+	参考：
+	#define LOWORD(l)           ((WORD)(l))
+	#define HIWORD(l)           ((WORD)(((DWORD)(l) >> 16) & 0xFFFF))
+	//&0xffff看不明白的话，0x0000ffff可以看明白了吧。
+	//高16位于0&，低16位和1&；
+}
+
+三种位运算
+{
+	标志位组合(组合键) wParam = MK_RBUTTON | MK_CONTROL | MK_SHIFT
+	标志位的判断	if(wParam & MK_LBUTTON)
+	标志位的分离	wParam &= ~MK_RBUTTON
+}

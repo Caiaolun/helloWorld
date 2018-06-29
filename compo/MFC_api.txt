@@ -1,0 +1,53 @@
+获取编辑框的整数
+{
+	GetDlgItemInt(, , , )
+}
+
+设置编辑框的整数
+{
+	SetDlgItemInt(, , , )
+}
+
+设置编辑框的文本
+{
+	SetDlgItemText(, , , )
+}
+
+消息对话框
+{
+	MessageBox(, , , )
+}
+
+窗口
+{
+	DialogBox(, , , )
+}
+
+工具箱->Picture Control
+{
+	1. 一个方框,可收缩成一条线,可做窗口的分界线
+	2. 也可以右键添加图片(先属性选择Picture Control的type类型)
+}
+
+只查找主窗口,不能查找子窗口
+{
+	FindWindow()
+}
+
+关闭模式对话框(Modal Dialog)
+{
+	DialogBox()
+}
+
+对一个主窗口标题设置文字
+{
+	SetWindowText()
+}
+
+初始窗口位子
+{
+	RECT rect;(长方体结构体)
+	GetWindowsRect(hWnd, &rect);
+	MoveWindow(hWnd, 10,50, rect.right - rect.left, rect.bottom - rect.top, FALSE)
+}
+

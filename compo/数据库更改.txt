@@ -1,0 +1,10 @@
+svp_base_config
+{
+	visi_db_cfg
+}
+
+service_qrcode_server_master
+{
+	base_cfg_svp_list
+	vist_db_cfg
+}
